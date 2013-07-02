@@ -1,0 +1,25 @@
+<html>
+	<HEAD>
+		<TITLE>Color Concentration:</TITLE>
+		<link href="/css/colorcon.css" rel="stylesheet" type="text/css" media="screen">	
+	</HEAD>
+	<BODY>
+		<p>&nbsp;</p>
+		<div class="centered">
+			<p>Start a new game of Color Concentration:</p>
+			<p>&nbsp;</p>
+			<form action="/create_new_game/C/" method="POST" > 
+				<input type="submit" value="Match color, ignore text" />
+			</form>
+			<p>&nbsp;</p>
+			<form action="/create_new_game/T/" method="POST" > 
+				<input type="submit" value="Match text, ignore color" />
+			</form>
+			<p>&nbsp;</p>
+			<form action="/create_new_game/X/" method="POST" > 
+				<input type="submit" value="Match text of the first card to color of the second" />
+			</form>
+		</div>
+	</BODY>
+</html>
+

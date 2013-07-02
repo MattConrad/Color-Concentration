@@ -1,0 +1,41 @@
+* {
+	margin: 0 auto;	
+}
+
+body {
+	font-family: verdana, sans-serif;
+	background-color: #000000;
+	color: #DDDDDD;
+}
+
+.card_cell {
+	width: 120px;
+	height: 80px;
+	font-size: 1.4em;
+	font-weight: bold;
+	text-align: center;
+}
+
+.card_button {
+	width: 100%;
+	height: 100%;
+}
+
+.dim {
+	background-color: #444444;
+}
+
+.centered {
+	text-align: center;
+}
+
+.centered table {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.miss_match_msg {
+	margin: 1em;
+	font-weight: bold;
+	color: #FFFFFF;
+}

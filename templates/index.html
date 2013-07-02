@@ -1,0 +1,81 @@
+<html>
+	<HEAD>
+		<TITLE>Color Concentration:</TITLE>
+		<link href="/css/colorcon.css" rel="stylesheet" type="text/css" media="screen">	
+		<script>
+			{% ifequal special 'failed_match' %}
+				function onLoadActions() {
+					setTimeout(submitClear, 2000);
+				}
+
+				function submitClear() {
+					var f = document.createElement('form');
+					f.action = '/clear_failed_matches/';
+					f.method = 'POST';
+					document.body.appendChild(f);
+					f.submit();
+				}
+			{% else %}
+				function onLoadActions() {}
+			{% endifequal %}
+		</script>
+	</HEAD>
+	<BODY onLoad='onLoadActions();'>
+		{% if game %}
+			<p>&nbsp;</p>
+			{% ifequal game.match_type 'C' %}
+				<p class="centered">Match the color of the word, ignore the text.</p>
+			{% endifequal %}
+			{% ifequal game.match_type 'T' %}
+				<p class="centered">Match the text of the word, ignore the color.</p>
+			{% endifequal %}
+			{% ifequal game.match_type 'X' %}
+			<p class="centered">Match the text of the <strong>first</strong> word to the color of the <strong>second</strong>.</p>
+			{% endifequal %}
+		{% endif %}
+		<div class="centered"><table>
+		{% if cards %}
+			<tr>
+			{% for card in cards %}
+				<td class="card_cell{% if card.match_found %} dim{% endif %}">
+					{% if card.match_found or card.active_guess %}
+						<div style="color: {{ card.color_display }}">{{ card.color_text }}</div>
+					{% else %}
+						<form action="/{{ card.id }}/" method="POST" class="card_button"> 
+							<input type="submit" class="card_button" value="" {% ifequal special 'failed_match' %}disabled{% endifequal %}/>
+						</form>
+					{% endif %}
+				</td>
+				{% if forloop.counter|divisibleby:5 and not forloop.last %}
+					</tr>	
+					<tr>
+				{% endif %}
+			{% endfor %}
+			</tr>
+		{% else %}
+			<p>(No colors to show.)</p>
+		{% endif %}
+		</table></div>
+		{% if game %}
+			<div class="centered">
+			{% ifequal special 'failed_match' %}
+				<p class="miss_match_msg">Not a match.  Wait a moment for the screen to refresh and try again.</p>
+			{% endifequal %}
+			{% ifequal special 'won_game' %}
+				<p>You won! It took you {{ game.guess_count }} guess{{ game.guess_count|pluralize:"es" }}.</p>
+				<p>&nbsp;</p>
+				<form action="/create_new_game/C/" method="POST" > 
+					<input type="submit" value="Play again, matching color" />
+				</form>
+				<p>&nbsp;</p>
+				<form action="/create_new_game/T/" method="POST" > 
+					<input type="submit" value="Play again, matching text" />
+				</form>
+			{% else %}
+				<p>You've taken {{ game.guess_count }} guess{{ game.guess_count|pluralize:"es" }} so far.</p>
+			{% endifequal %}
+			</div>
+		{% endif %}
+	</BODY>
+</html>
+
